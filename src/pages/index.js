@@ -70,7 +70,24 @@ const IndexPage = () => {
 
     santaMarker.addTo(leafletElement);
 
-    console.log(lastKnownDestination);
+    // Create a set of LatLng coordinates that make up Santa's route
+    const santasRouteLatLngs = destinationsWithPresents.map( destination => {
+      const { location } = destination;
+      const { lat, lng } = location;
+      return new L.LatLng(lat, lng);
+    });
+
+    // Utilize Leaflet's Polyline to add the route to the map
+    const santasRoute = new L.Polyline( santasRouteLatLngs, {
+      weight: 2,
+      color: 'green',
+      opacity: 1,
+      fillColor: 'green',
+      fillOpacity: 0.5
+    });
+
+    // Add Santa's route to the map
+    santasRoute.addTo(leafletElement);
   }
 
   const mapSettings = {
