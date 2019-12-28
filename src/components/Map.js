@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
+import L from 'leaflet';
 import { Map as BaseMap, TileLayer, ZoomControl } from 'react-leaflet';
 
 import { useConfigureLeaflet, useMapServices, useRefEffect } from 'hooks';
@@ -36,9 +37,14 @@ const Map = ( props ) => {
     );
   }
 
+  const corner1 = new L.LatLng(-90, -180);
+  const corner2 = new L.LatLng(90, 180);
+  const maxBound = new L.LatLngBounds(corner1, corner2);
+
   const mapSettings = {
     className: 'map-base',
     zoomControl: false,
+    maxBounds: maxBound,
     ...rest
   };
 

@@ -7,8 +7,8 @@ import Layout from 'components/Layout';
 import Map from 'components/Map';
 
 const LOCATION = {
-  lat: 38.9072,
-  lng: -77.0369
+  lat: 0,
+  lng: 0
 };
 const CENTER = [LOCATION.lat, LOCATION.lng];
 const DEFAULT_ZOOM = 1;
@@ -32,13 +32,14 @@ const IndexPage = () => {
     center: CENTER,
     defaultBaseMap: 'OpenStreetMap',
     zoom: DEFAULT_ZOOM,
+    noWrap: true,
     mapEffect
   };
 
   return (
     <Layout pageName="home">
       <Helmet>
-        <title>Home Page</title>
+        <title>Santa Tracker</title>
       </Helmet>
 
       <Map {...mapSettings} />

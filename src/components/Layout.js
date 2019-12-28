@@ -4,8 +4,8 @@ import Helmet from 'react-helmet';
 
 import 'assets/stylesheets/application.scss';
 
-import Header from 'components/Header';
-import Footer from 'components/Footer';
+// import Header from 'components/Header';
+// import Footer from 'components/Footer';
 
 const Layout = ({ children, pageName }) => {
   let className = '';
@@ -20,9 +20,9 @@ const Layout = ({ children, pageName }) => {
         <title>Gatsby Site</title>
       </Helmet>
       <div className="wrapper">
-        <Header />
+        {/* <Header /> */}
         <main>{ children }</main>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </>
   );

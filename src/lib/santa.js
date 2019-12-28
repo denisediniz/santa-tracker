@@ -1,6 +1,10 @@
 import L from 'leaflet';
+import { Polyline as WrappedPolyline } from 'leaflet-antimeridian/src/vector/Wrapped.Polyline.js';
 
 export async function returnSanta(map) {
+    const santaIcon = '&#127877;';
+    const presentIcon = '&#127873;';
+
     let route, routeJson;
     try {
       route = await fetch('https://firebasestorage.googleapis.com/v0/b/santa-tracker-firebase.appspot.com/o/route%2Fsanta_en.json?alt=media&2018b');
@@ -20,7 +24,7 @@ export async function returnSanta(map) {
       const noSanta = L.marker( center, {
         icon: L.divIcon({
           className: 'icon',
-          html: `<div class="icon-santa">🎅</div>`,
+          html: `<div class="icon-santa">${santaIcon}</div>`,
           iconSize: 50
         })
       });
@@ -29,6 +33,19 @@ export async function returnSanta(map) {
       noSanta.openPopup();
       return;
     }
+
+    // Add presents delivered to the map
+    destinationsWithPresents.map( ({location}) => {
+        const presentsMarker = L.marker([location.lat, location.lng], {
+            icon: L.divIcon({
+                className: 'icon',
+                html: `<div class="icon-present">${presentIcon}</div>`,
+                iconSize: 20
+            })
+        });
+        return presentsMarker.addTo(map);
+    });
+
 
     // Add Santa to the map
 
@@ -39,7 +56,7 @@ export async function returnSanta(map) {
     const santaMarker = L.marker( santaLocation, {
       icon: L.divIcon({
         className: 'icon',
-        html: `<div class="icon-santa">🎅</div>`,
+        html: `<div class="icon-santa">${santaIcon}</div>`,
         iconSize: 50
       })
     });
@@ -54,7 +71,7 @@ export async function returnSanta(map) {
     });
 
     // Utilize Leaflet's Polyline to add the route to the map
-    const santasRoute = new L.Polyline( santasRouteLatLngs, {
+    const santasRoute = new WrappedPolyline( santasRouteLatLngs, {
       weight: 2,
       color: 'green',
       opacity: 1,
